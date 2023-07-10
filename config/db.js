@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const {DB_URI} = require("../config")
-
 
 const connectDB = async () => {
   try {
@@ -13,7 +11,7 @@ const connectDB = async () => {
     );
   } catch (error) {
     console.error(
-      `There is some error occured: ${error.message}`.bold.red.italic
+      `There is some error occur: ${error.message}`.bold.red.italic
     );
   }
 }
