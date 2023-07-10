@@ -1,6 +1,7 @@
 const { model, Schema } = require("mongoose");
 
 const schemaMovies = Schema({
+  title:String,
   thumbnail: Object,
   year: Number,
   category: String,

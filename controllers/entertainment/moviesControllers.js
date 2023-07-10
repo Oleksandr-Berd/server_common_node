@@ -10,15 +10,28 @@ const getAll = async (req, res) => {
 
 const getOneById = async (req, res) => {
   const { id } = req.params;
-    const result = await Movies.findById(id);
-    
- if (!result) {
-   throw HttpError(404, "Not found");
- }
-    
+  const result = await Movies.findById(id);
+
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+
   res.status(200).json(result);
+};
+
+const add = async (req, res) => {
+  const movie = await Movies.create({ ...req.body });
+console.log("test".red, req);
+  if (!movie) {
+    res.status(400);
+    throw new Error("Unable to save in a data base");
+  }
+  res
+    .status(201)
+    .json({ code: 201, message: "Successful success", data: movie });
 };
 module.exports = {
   getAll: ctrlWrapper(getAll),
   getOneById: ctrlWrapper(getOneById),
+  add: ctrlWrapper(add),
 };
