@@ -8,6 +8,18 @@ const getAll = async (req, res) => {
   res.status(200).json(result);
 };
 
+const getTrending = async (req, res) => {
+  const result = await Movies.find();
+
+  const trendingResult = result.filter(({ isTrending }) => isTrending);
+
+  if (!trendingResult) {
+    throw HttpError(404, "Not found");
+  }
+
+  res.status(200).json(trendingResult);
+};
+
 const getOneById = async (req, res) => {
   const { id } = req.params;
   const result = await Movies.findById(id);
@@ -31,21 +43,31 @@ const add = async (req, res) => {
 };
 
 const removeById = async (req, res) => {
-    const { id } = req.params;
-    
-    console.log("test".red, id);
-     const result = await Movies.findByIdAndRemove(id);
-     if (!result) {
-       throw HttpError(404, "Not found");
-     }
-     res.status(200).json({
-       message: "Delete is successful",
-     });
-}
+  const { id } = req.params;
+
+  const result = await Movies.findByIdAndRemove(id);
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+  res.status(200).json({
+    message: "Delete is successful",
+  });
+};
+
+const updateBookmarked = async (req, res) => {
+  const { id } = req.params;
+  const result = await Movies.findByIdAndUpdate(id, req.body, { new: true });
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+  res.json(result);
+};
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
+  getTrending: ctrlWrapper(getTrending),
   getOneById: ctrlWrapper(getOneById),
   add: ctrlWrapper(add),
   removeById: ctrlWrapper(removeById),
+  updateBookmarked: ctrlWrapper(updateBookmarked),
 };
