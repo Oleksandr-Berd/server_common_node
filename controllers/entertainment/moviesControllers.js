@@ -63,11 +63,34 @@ const updateBookmarked = async (req, res) => {
   res.json(result);
 };
 
+const addImage = async (req, res) => {
+  const { id } = req.params;
+
+    const data = req.file.path
+    
+    const movieImage = await Movies.findByIdAndUpdate(id, {
+      $set: { "thumbnail.regular.small": data },
+    });
+
+  if (!movieImage) {
+    res.status(400);
+    throw new Error("There is no movie with this id");
+  }
+
+  res.status(200).json({
+    code: 200,
+    message: "Successful success",
+    data: movieImage,
+  });
+};
+
+
 module.exports = {
   getAll: ctrlWrapper(getAll),
   getTrending: ctrlWrapper(getTrending),
   getOneById: ctrlWrapper(getOneById),
   add: ctrlWrapper(add),
   removeById: ctrlWrapper(removeById),
-  updateBookmarked: ctrlWrapper(updateBookmarked),
+    updateBookmarked: ctrlWrapper(updateBookmarked),
+  addImage: ctrlWrapper(addImage)
 };

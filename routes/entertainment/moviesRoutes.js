@@ -1,5 +1,6 @@
 const express = require("express");
 const ctrlMovies = require("./../../controllers/entertainment/moviesControllers");
+const {uploadCloud} = require("../../middleware/index")
 
 
 
@@ -12,6 +13,11 @@ moviesRouter.get("/movies/trending", ctrlMovies.getOneById);
 moviesRouter.post("/movies", ctrlMovies.add);
 moviesRouter.delete("/movies/:id", ctrlMovies.removeById);
 moviesRouter.patch("/movies/:id/bookmarked", ctrlMovies.updateBookmarked);
+moviesRouter.patch(
+  "/movies/:id/image",
+  uploadCloud.single("image"),
+  ctrlMovies.addImage
+);
 
 
 

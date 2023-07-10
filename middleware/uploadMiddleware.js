@@ -2,9 +2,9 @@ const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 const path = require("path");
-const pathToEnv = path.join(__dirname, "..", "config", ".env");
 const dotenv = require("dotenv");
-const { log } = require("console");
+
+const pathToEnv = path.join(__dirname, "..", "config", ".env");
 dotenv.config({ path: pathToEnv });
 
 
@@ -16,11 +16,8 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  folder: "entertainment",
-  limits: {
-    files: 50, // allow up to 5 files
-  },
-  allowedFormats: ["jpg", "png", "jpeg"],
+  folder: "movies",
+  allowedFormats: ["jpg", "png"],
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
