@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
-// mongoose.connect()
+const {DB_URI} = require("./config")
+
 
 const connectDB = async () => {
   try {
-    console.log(process.env.DB_URI);
+    console.log(DB_URI);
     mongoose.set("strictQuery", true);
-    const db = await mongoose.connect(process.env.DB_URI);
+    const db = await mongoose.connect(DB_URI);
     console.log(
       `Successful success with DB, name: ${db.connection.name} on port: ${db.connection.port}, on host: ${db.connection.host}`
         .bold.brightCyan.italic

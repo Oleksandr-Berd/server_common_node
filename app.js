@@ -27,7 +27,7 @@ const pathToEnv = path.join(__dirname, "..", "config", ".env");
 dotenv.config({ path: pathToEnv });
 
 
-app.use("/entertainment", moviesRouter);
+app.use("/api/entertainment", moviesRouter);
 
 
 module.exports = app
