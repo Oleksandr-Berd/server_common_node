@@ -5,8 +5,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 require("colors");
 
-
-
+const moviesRouter = require("./routes/entertainment/moviesRoutes")
 
 const app = express();
 
@@ -26,6 +25,9 @@ app.use(
 const pathToEnv = path.join(__dirname, "..", "config", ".env");
 
 dotenv.config({ path: pathToEnv });
+
+
+app.use("/entertainment", moviesRouter);
 
 
 module.exports = app
