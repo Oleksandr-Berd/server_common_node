@@ -9,15 +9,13 @@ const getAll = async (req, res) => {
 };
 
 const getTrending = async (req, res) => {
-  const result = await Movies.find();
+  const result = await Movies.find({ isTrending: true});
 
-  const trendingResult = result.filter(({ isTrending }) => isTrending);
-
-  if (!trendingResult) {
+  if (!result) {
     throw HttpError(404, "Not found");
   }
 
-  res.status(200).json(trendingResult);
+  res.status(200).json(result);
 };
 
 const getOneById = async (req, res) => {
