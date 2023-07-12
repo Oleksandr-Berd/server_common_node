@@ -15,7 +15,7 @@ const getTrending = async (req, res) => {
     throw HttpError(404, "Not found");
   }
 
-  res.status(200).json(result);
+  res.status(200).json({code: 200, result: result});
 };
 
 const getOneById = async (req, res) => {
