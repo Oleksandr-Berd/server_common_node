@@ -22,7 +22,7 @@ const userSchema = new Schema(
       required: true,
     },
   },
-  { versionKeys: false, timeStamps: true }
+  { versionKey: false, timestamps: true }
 );
 
 console.log(handleMongooseError);
