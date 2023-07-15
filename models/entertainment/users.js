@@ -14,16 +14,16 @@ const userSchema = new Schema(
     email: {
       type: String,
       match: emailRegexp,
+      unique: true,
       required: true,
     },
     password: {
       type: String,
       minLength: 6,
       required: true,
-        },
-        bookmarked: {
-            type: [],
-            
+    },
+    bookmarked: {
+      type: [],
     },
   },
   { versionKey: false, timestamps: true }
@@ -45,9 +45,10 @@ const loginSchema = Joi.object({
 });
 
 const schemas = {
-    registerSchema, loginSchema
-}
+  registerSchema,
+  loginSchema,
+};
 
-const User = model("user", userSchema)
+const User = model("user", userSchema);
 
-module.exports = {User, schemas}
+module.exports = { User, schemas };
