@@ -6,6 +6,8 @@ const dotenv = require("dotenv");
 require("colors");
 
 const moviesRouter = require("./routes/entertainment/moviesRoutes")
+const authEntertainmentRouter = require("./routes/entertainment/authRoutes");
+const authRouter = require("./routes/entertainment/authRoutes");
 
 const app = express();
 
@@ -28,6 +30,7 @@ dotenv.config({ path: pathToEnv });
 
 
 app.use("/api/entertainment", moviesRouter);
+app.use("/api/entertainment/auth", authRouter)
 
 
 module.exports = app

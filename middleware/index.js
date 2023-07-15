@@ -1,3 +1,4 @@
 const uploadCloud = require("./uploadMiddleware")
+const validateBody = require("./validateBody")
 
-module.exports = { uploadCloud };
+module.exports = { uploadCloud, validateBody };
