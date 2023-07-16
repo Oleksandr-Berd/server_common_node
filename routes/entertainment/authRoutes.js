@@ -10,7 +10,9 @@ router.post("/register", validateBody(schemas.registerSchema), ctrl.register);
 
 router.post("/login", validateBody(schemas.loginSchema), ctrl.login);
 
-router.patch ("/bookmarked", authenticate, ctrl.addBookmarked)
+router.patch("/bookmarked", authenticate, ctrl.addBookmarked)
+
+router.get("/current", authenticate, ctrl.getCurrent)
 
 
 module.exports = router

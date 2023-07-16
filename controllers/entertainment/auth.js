@@ -74,8 +74,16 @@ const addBookmarked = async (req, res) => {
 
 };
 
+const getCurrent = async (req, res) => {
+    
+    const { email, name } = req.user
+    
+    res.json({name, email})
+}
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   addBookmarked: ctrlWrapper(addBookmarked),
+  getCurrent: ctrlWrapper(getCurrent),
 };

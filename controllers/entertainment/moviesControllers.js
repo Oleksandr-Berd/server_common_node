@@ -3,13 +3,18 @@ const { Movies } = require("../../models/index");
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
-  const result = await Movies.find({});
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
 
+  const result = await Movies.find({},"", {skip, limit});
   res.status(200).json(result);
 };
 
 const getTrending = async (req, res) => {
-  const result = await Movies.find({ isTrending: true});
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+
+  const result = await Movies.find({ isTrending: true }, "", { skip, limit });
 
   if (!result) {
     throw HttpError(404, "Not found");
