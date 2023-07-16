@@ -3,7 +3,7 @@ const { Movies } = require("../../models/index");
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 1000 } = req.query;
   const skip = (page - 1) * limit;
 
   const result = await Movies.find({},"", {skip, limit});
@@ -69,7 +69,7 @@ const updateBookmarked = async (req, res) => {
 const addImage = async (req, res) => {
   const { id } = req.params;
 
-    const data = req.file.path
+    const data = req.file.path  
     
     const movieImage = await Movies.findByIdAndUpdate(id, {
       $set: { "thumbnail.regular.small": data },

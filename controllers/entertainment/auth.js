@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const gravatar = require("gravatar")
 
 const { User } = require("../../models");
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
@@ -8,7 +9,6 @@ const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
-
   const user = await User.findOne({ email });
 
   if (user) {
@@ -17,7 +17,9 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+    const avatarUrl = gravatar.url(email)
+    
+  const newUser = await User.create({ ...req.body, password: hashPassword, avatarUrl});
 
   res.status(201).json({
     code: 201,
@@ -47,38 +49,61 @@ const login = async (req, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
 
+  await User.findByIdAndUpdate(user._id, { token });
+
   res.json({ token });
 };
 
 const addBookmarked = async (req, res) => {
   const { _id } = req.user;
   const { title } = req.body;
-    const user = await User.findById(_id);
+  const user = await User.findById(_id);
 
-    const {bookmarked} = user
-    
-    if (!bookmarked.includes(title)) {
-        const addBookmark = await User.findByIdAndUpdate(_id, {
-          bookmarked: [...bookmarked, title],
-        });
+  const { bookmarked } = user;
 
-        res.json(addBookmark);
-    } else {
-        const updateBookmarked = bookmarked.filter(el => el !== title)
+  if (!bookmarked.includes(title)) {
+    const addBookmark = await User.findByIdAndUpdate(_id, {
+      bookmarked: [...bookmarked, title],
+    });
 
-        const result = await User.findByIdAndUpdate(_id, {
-          bookmarked: updateBookmarked,
-        });
-         res.json(result);
-    }
+    res.json(addBookmark);
+  } else {
+    const updateBookmarked = bookmarked.filter((el) => el !== title);
 
+    const result = await User.findByIdAndUpdate(_id, {
+      bookmarked: updateBookmarked,
+    });
+    res.json(result);
+  }
 };
 
 const getCurrent = async (req, res) => {
+  const { email, name } = req.user;
+
+  res.json({ name, email });
+};
+
+const logout = async (req, res) => {
+
+    const { _id } = req.user
+    await User.findByIdAndUpdate(_id,{ token: "" })
     
-    const { email, name } = req.user
+    res.json({message: "Logout successful success"})
+};
+
+const updateAvatar = async (req, res) => {
+const {_id} = req.user
+
+const data = req.file.path;
+
+    console.log("test", data);
+    const result = await User.findByIdAndUpdate(_id, { avatarUrl: data })
     
-    res.json({name, email})
+    if (!result) {
+      throw HttpError(404, "Not found");
+    }
+
+    res.status(201).json(result)
 }
 
 module.exports = {
@@ -86,4 +111,6 @@ module.exports = {
   login: ctrlWrapper(login),
   addBookmarked: ctrlWrapper(addBookmarked),
   getCurrent: ctrlWrapper(getCurrent),
+  logout: ctrlWrapper(logout),
+  updateAvatar: ctrlWrapper(updateAvatar),
 };

@@ -7,7 +7,6 @@ require("colors");
 
 const moviesRouter = require("./routes/entertainment/moviesRoutes")
 const authEntertainmentRouter = require("./routes/entertainment/authRoutes");
-const authRouter = require("./routes/entertainment/authRoutes");
 
 const app = express();
 
@@ -23,6 +22,7 @@ app.use(
     cookie: { secure: true },
   })
 );
+app.use(express.static("public"))
 
 const pathToEnv = path.join(__dirname, "..", "config", ".env");
 
@@ -30,7 +30,7 @@ dotenv.config({ path: pathToEnv });
 
 
 app.use("/api/entertainment", moviesRouter);
-app.use("/api/entertainment/auth", authRouter)
+app.use("/api/entertainment/auth", authEntertainmentRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

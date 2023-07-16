@@ -23,8 +23,17 @@ const userSchema = new Schema(
       required: true,
     },
     bookmarked: {
-      type: [],
+      type: Array,
+      default: [],
     },
+    token: {
+      type: String,
+      default: ""
+    },
+    avatarUrl: {
+      type: String,
+      required: true,
+    }
   },
   { versionKey: false, timestamps: true }
 );
