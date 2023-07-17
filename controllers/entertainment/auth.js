@@ -53,7 +53,7 @@ const login = async (req, res) => {
     const responseEmail = user.email;
     const responseName = user.name;
     
-  res.json({ responseName, responseEmail, token });
+  res.json({ name:responseName, email:responseEmail, token });
 };
 
 const addBookmarked = async (req, res) => {
