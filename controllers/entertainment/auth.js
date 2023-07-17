@@ -32,7 +32,6 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-
   if (!user) {
     throw HttpError(401, "Email or password is invalid");
   }
@@ -51,7 +50,10 @@ const login = async (req, res) => {
 
   await User.findByIdAndUpdate(user._id, { token });
 
-  res.json({ token });
+    const responseEmail = user.email;
+    const responseName = user.name;
+    
+  res.json({ responseName, responseEmail, token });
 };
 
 const addBookmarked = async (req, res) => {
