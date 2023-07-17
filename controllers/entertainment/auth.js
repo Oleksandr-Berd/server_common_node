@@ -8,7 +8,7 @@ const { ctrlWrapper, HttpError } = require("./../../utils/index");
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
@@ -18,13 +18,20 @@ const register = async (req, res) => {
   const hashPassword = await bcrypt.hash(password, 10);
 
     const avatarUrl = gravatar.url(email)
+
+const payload = {
+  email: email,
+};
+  const token = jwt.sign(payload ,SECRET_KEY, { expiresIn: "24h" });
     
-  const newUser = await User.create({ ...req.body, password: hashPassword, avatarUrl});
+  const newUser = await User.create({ ...req.body, password: hashPassword, avatarUrl, token});
 
   res.status(201).json({
     code: 201,
     email: newUser.email,
     name: newUser.name,
+    token: newUser.token,
+    avatarUrl: newUser.avatarUrl,
   });
 };
 
@@ -89,6 +96,10 @@ const getCurrent = async (req, res) => {
 const logout = async (req, res) => {
 
     const { _id } = req.user
+
+    console.log(req.user);
+
+
     await User.findByIdAndUpdate(_id,{ token: "" })
     
     res.json({message: "Logout successful success"})
@@ -99,7 +110,6 @@ const {_id} = req.user
 
 const data = req.file.path;
 
-    console.log("test", data);
     const result = await User.findByIdAndUpdate(_id, { avatarUrl: data })
     
     if (!result) {
