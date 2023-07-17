@@ -50,10 +50,11 @@ const login = async (req, res) => {
 
   await User.findByIdAndUpdate(user._id, { token });
 
+    const {avatarUrl, bookmarked} = user
     const responseEmail = user.email;
     const responseName = user.name;
     
-  res.json({ name:responseName, email:responseEmail, token });
+  res.json({ name:responseName, email:responseEmail, avatarUrl, bookmarked, token });
 };
 
 const addBookmarked = async (req, res) => {
