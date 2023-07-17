@@ -88,9 +88,9 @@ const addBookmarked = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const { email, name } = req.user;
+  const { email, name, bookmarked, avatarUrl } = req.user;
 
-  res.json({ name, email });
+  res.json({ name, email, bookmarked, avatarUrl });
 };
 
 const logout = async (req, res) => {
