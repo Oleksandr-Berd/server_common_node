@@ -105,10 +105,9 @@ const logout = async (req, res) => {
 const updateAvatar = async (req, res) => {
 const {_id} = req.user
 
-const data = req.file.path;
-
-    const result = await User.findByIdAndUpdate(_id, { avatarUrl: data })
+    const data = req.file.path;
     
+    const result = await User.findByIdAndUpdate(_id, { avatarUrl: data })
     if (!result) {
       throw HttpError(404, "Not found");
     }
