@@ -7,6 +7,7 @@ require("colors");
 
 const moviesRouter = require("./routes/entertainment/moviesRoutes")
 const authEntertainmentRouter = require("./routes/entertainment/authRoutes");
+const projectsRoutes = require("./routes/portfolio/projectsRoutes");
 
 const app = express();
 
@@ -31,6 +32,7 @@ dotenv.config({ path: pathToEnv });
 
 app.use("/api/entertainment", moviesRouter);
 app.use("/api/entertainment/auth", authEntertainmentRouter);
+app.use("/api/portfolio/", projectsRoutes)
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
