@@ -9,7 +9,6 @@ const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const setAdmin = async (req, res) => {
     const { name, email, password } = req.body;
-console.log(AdminPortfolio);
   const hashPassword = await bcrypt.hash(password, 10);
 
 const payload = {
@@ -34,7 +33,37 @@ const payload = {
 
 };
 
-const loginAdmin = async (req, res) => {};
+const loginAdmin = async (req, res) => {
+    const { email, password } = req.body;
+
+    const admin = await AdminPortfolio.findOne({ email });
+    if (!admin) {
+      throw HttpError(401, "Email or password is invalid");
+    }
+
+    const passwordCompare = await bcrypt.compare(password, admin.password);
+
+    if (!passwordCompare) {
+      throw HttpError(401, "Email or password is invalid");
+    }
+
+    const payload = {
+      id: admin._id,
+    };
+
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
+
+    await AdminPortfolio.findByIdAndUpdate(admin._id, { token });
+
+    const responseEmail = admin.email;
+    const responseName = admin.name;
+
+    res.json({
+      name: responseName,
+      email: responseEmail,
+      token,
+    });
+};
 
 const updateAdmin = async (req, res) => {};
 
