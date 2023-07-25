@@ -67,7 +67,11 @@ const loginAdmin = async (req, res) => {
 
 const updateAdmin = async (req, res) => {};
 
-const refreshAdmin = async (req, res) => {};
+const refreshAdmin = async (req, res) => {
+    const { email, name } = req.admin;
+
+    res.json({ name, email });
+};
 
 
 module.exports = {
