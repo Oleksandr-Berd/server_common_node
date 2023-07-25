@@ -9,7 +9,7 @@ const projectsRoutes = express.Router();
 
 projectsRoutes.post(
   "/projects",
-  validateBody(schemas.projectPostSchema),
+  validateBody(schemas.projectPostSchema),  
   ctrlProjects.addNew
 );
 
