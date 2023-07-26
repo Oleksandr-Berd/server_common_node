@@ -34,7 +34,6 @@ const authenticateAdmin = async (req, res, next) => {
   if (bearer !== "Bearer") {
     next(HttpError(401));
   }
-
   try {
     const { id, email } = jwt.verify(token, SECRET_KEY);
     const admin = id

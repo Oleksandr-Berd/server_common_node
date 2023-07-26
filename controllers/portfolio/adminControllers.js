@@ -35,7 +35,7 @@ const payload = {
 
 const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
-
+console.log(email, password);
     const admin = await AdminPortfolio.findOne({ email });
     if (!admin) {
       throw HttpError(401, "Email or password is invalid");
