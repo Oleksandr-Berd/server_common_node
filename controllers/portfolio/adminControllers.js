@@ -73,10 +73,19 @@ const refreshAdmin = async (req, res) => {
     res.json({ name, email });
 };
 
+const logoutAdmin = async (req, res) => {
+   const { _id } = req.admin;
+
+   await AdminPortfolio.findByIdAndUpdate(_id, { token: "" });
+
+   res.json({ message: "Logout successful success" });
+}
+
 
 module.exports = {
   setAdmin: ctrlWrapper(setAdmin),
   loginAdmin: ctrlWrapper(loginAdmin),
   updateAdmin: ctrlWrapper(updateAdmin),
   refreshAdmin: ctrlWrapper(refreshAdmin),
+  logoutAdmin: ctrlWrapper(logoutAdmin)
 };

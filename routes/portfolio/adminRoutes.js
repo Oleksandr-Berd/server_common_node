@@ -11,6 +11,13 @@ adminPortfolioRoutes.post("/admin/login", ctrlAdmin.loginAdmin);
 
 adminPortfolioRoutes.get("/admin/current", authenticateAdmin, ctrlAdmin.refreshAdmin);
 
+adminPortfolioRoutes.post(
+  "/admin/logout",
+  authenticateAdmin,
+  ctrlAdmin.logoutAdmin
+);
+
+
 
 
 module.exports = adminPortfolioRoutes;
