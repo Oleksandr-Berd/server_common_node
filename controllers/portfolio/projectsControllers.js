@@ -4,7 +4,13 @@ const { Projects } = require("../../models/index");
 
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
-const getAll = async (req, res) => {};
+const getAll = async (req, res) => {
+   const { page = 1, limit = 1000 } = req.query;
+   const skip = (page - 1) * limit;
+
+   const result = await Projects.find({}, "", { skip, limit });
+   res.status(200).json(result);
+};
 
 const getAllByDifficulty = async (req, res) => {};
 
@@ -12,13 +18,16 @@ const getDetails = async (req, res) => {};
 
 const addNew = async (req, res) => {
 
+const {title} = req.body
+
   const project = await Projects.create({ ...req.body });
 
   if (!project) {
     throw HttpError(400, "Unable to save your data");
   }
 
-    
+  const coverUrl = gravatar.url(title);  
+
   res
     .status(201)
     .json({
@@ -31,9 +40,11 @@ const addNew = async (req, res) => {
 const updateOne = async (req, res) => { };
 
 const updateCover = async (req, res) => {
-const {title} = req.body
+  const { title } = req.body
+  
   
   const data = req.file.path;
+
 
   const result = await Projects.findOneAndUpdate({ title }, {coverImage: data})
 
