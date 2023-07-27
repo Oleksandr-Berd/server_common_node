@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const { handleMongooseError } = require("../../utils");
 
-const difficulties = ["junior", "intermediate", "advanced"];
+const difficulties = ["Junior", "Intermediate", "Advanced", "Guru"];
 
 const schemaProject = Schema(
   {
@@ -25,7 +25,6 @@ const schemaProject = Schema(
     },
     coverImage: {
       type: String,
-      require: true,
     },
     summary: {
       type: String,
@@ -33,7 +32,7 @@ const schemaProject = Schema(
     },
     preview: {
       type: Array,
-      //   require: true,
+     
     },
     difficulty: {
       type: String,
@@ -51,8 +50,6 @@ const projectPostSchema = Joi.object({
   liveUrl: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),
-  coverImage: Joi.string()
-    .uri({ scheme: ["http", "https"] }),
     
   summary: Joi.string().min(10).required(),
   preview: Joi.array().items(Joi.string().uri()),

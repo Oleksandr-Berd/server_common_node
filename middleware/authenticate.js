@@ -45,6 +45,7 @@ const authenticateAdmin = async (req, res, next) => {
     }
 
     req.admin = admin;
+
     next();
   } catch (error) {
     next(HttpError(401));

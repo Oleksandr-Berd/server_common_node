@@ -12,8 +12,9 @@ const getDetails = async (req, res) => {};
 
 const addNew = async (req, res) => {
 
-    const {title} = req.body
+  const { title } = req.body
   const project = await Projects.create({ ...req.body });
+
 
   if (!project) {
     throw HttpError(400, "Unable to save your data");
@@ -30,7 +31,21 @@ const addNew = async (req, res) => {
     });
 };
 
-const updateOne = async (req, res) => {};
+const updateOne = async (req, res) => { };
+
+const updateCover = async (req, res) => {
+const {title} = req.body
+  
+  const data = req.file.path;
+
+  const result = await Projects.findOneAndUpdate({ title }, {coverImage: data})
+
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+
+  res.status(201).json({ data });
+};
 
 const removeOne = async (req, res) => {};
 
@@ -41,4 +56,5 @@ module.exports = {
   addNew: ctrlWrapper(addNew),
   updateOne: ctrlWrapper(updateOne),
   removeOne: ctrlWrapper(removeOne),
+  updateCover: ctrlWrapper(updateCover),
 };

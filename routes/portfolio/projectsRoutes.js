@@ -14,4 +14,12 @@ projectsRoutes.post(
   ctrlProjects.addNew
 );
 
+projectsRoutes.patch(
+  "/projects/avatars",
+  authenticateAdmin,
+  uploadCloud.single("coverImage"),
+  ctrlProjects.updateCover
+);
+
+
 module.exports = projectsRoutes;
