@@ -14,7 +14,14 @@ const getAll = async (req, res) => {
 
 const getAllByDifficulty = async (req, res) => {};
 
-const getDetails = async (req, res) => {};
+const getDetails = async (req, res) => {
+
+  const { title } = req.params
+  
+  const result = await Projects.find({title});
+
+   res.status(200).json(result);
+};
 
 const addNew = async (req, res) => {
 

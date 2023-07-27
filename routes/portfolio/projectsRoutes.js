@@ -14,6 +14,9 @@ const projectsRoutes = express.Router();
 
 projectsRoutes.get("/projects", ctrlProjects.getAll);
 
+projectsRoutes.get("/projects/:title", ctrlProjects.getDetails);
+
+
 projectsRoutes.post(
   "/projects",
   validateBody(schemas.projectPostSchema),
