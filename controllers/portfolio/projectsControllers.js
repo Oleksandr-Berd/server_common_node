@@ -12,15 +12,12 @@ const getDetails = async (req, res) => {};
 
 const addNew = async (req, res) => {
 
-  const { title } = req.body
   const project = await Projects.create({ ...req.body });
-
 
   if (!project) {
     throw HttpError(400, "Unable to save your data");
   }
 
-     const coverUrl = gravatar.url(title);
     
   res
     .status(201)

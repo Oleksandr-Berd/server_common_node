@@ -50,7 +50,6 @@ const projectPostSchema = Joi.object({
   liveUrl: Joi.string()
     .uri({ scheme: ["http", "https"] })
     .required(),
-    
   summary: Joi.string().min(10).required(),
   preview: Joi.array().items(Joi.string().uri()),
   difficulty: Joi.string()
