@@ -62,6 +62,30 @@ const updateCover = async (req, res) => {
   res.status(201).json({ data });
 };
 
+const updatePreview = async (req, res) => {
+   const { title } = req.body;
+
+  const data = req.file.path;
+  
+  const project = await Projects.find({ title })
+  
+  const {preview} = project[0]
+
+  preview.push(data);
+
+
+   const result = await Projects.findOneAndUpdate(
+     { title },
+     { preview: preview }
+   );
+
+   if (!result) {
+     throw HttpError(404, "Not found");
+   }
+
+   res.status(201).json({ data });
+}
+
 const removeOne = async (req, res) => {};
 
 module.exports = {
@@ -72,4 +96,5 @@ module.exports = {
   updateOne: ctrlWrapper(updateOne),
   removeOne: ctrlWrapper(removeOne),
   updateCover: ctrlWrapper(updateCover),
+  updatePreview: ctrlWrapper(updatePreview), 
 };

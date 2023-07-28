@@ -31,4 +31,11 @@ projectsRoutes.patch(
   ctrlProjects.updateCover
 );
 
+projectsRoutes.patch(
+  "/projects/preview",
+  authenticateAdmin,
+  uploadCloud.single("preview"),
+  ctrlProjects.updatePreview
+);
+
 module.exports = projectsRoutes;
