@@ -18,5 +18,11 @@ router.post("/logout", authenticate, ctrl.logout)
 
 router.patch("/avatars", authenticate, uploadCloud.single("avatar"), ctrl.updateAvatar)
 
+router.patch(
+  "/update",
+  ctrl.updateUser
+);
+
+
 
 module.exports = router

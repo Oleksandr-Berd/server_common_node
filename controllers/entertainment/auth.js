@@ -25,9 +25,9 @@ const payload = {
   const token = jwt.sign(payload ,SECRET_KEY, { expiresIn: "24h" });
     
   const newUser = await User.create({ ...req.body, password: hashPassword, avatarUrl, token});
-
   res.status(201).json({
     code: 201,
+    id: newUser._id,
     email: newUser.email,
     name: newUser.name,
     token: newUser.token,
@@ -102,6 +102,19 @@ const logout = async (req, res) => {
     res.json({message: "Logout successful success"})
 };
 
+const updateUser = async (req, res) => {
+
+  const { newName, id } = req.body
+  
+  const result = await User.findByIdAndUpdate(id, { name: newName });
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+console.log(result);
+  res.status(201).json({ name: newName, email: result.email, id: result.id });
+};
+
+
 const updateAvatar = async (req, res) => {
 const {_id} = req.user
 
@@ -122,4 +135,5 @@ module.exports = {
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
   updateAvatar: ctrlWrapper(updateAvatar),
+  updateUser: ctrlWrapper(updateUser)
 };
