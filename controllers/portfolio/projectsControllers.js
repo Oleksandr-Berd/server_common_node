@@ -74,6 +74,8 @@ const updatePreview = async (req, res) => {
   preview.push(data);
 
 
+const test = (req, res) => {}
+
    const result = await Projects.findOneAndUpdate(
      { title },
      { preview: preview }
