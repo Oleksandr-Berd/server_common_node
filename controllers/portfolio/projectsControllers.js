@@ -17,7 +17,6 @@ const getAll = async (req, res) => {
     ? await Projects.find({ difficulty: difficulty }, "", { skip, limit })
     : await Projects.find({}, "", { skip, limit });
 
-  console.log(result);
   
   res.status(200).json(result);
 };
