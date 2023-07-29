@@ -5,16 +5,19 @@ const { Projects } = require("../../models/index");
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
-  const { page = 1, limit = 1000, difficulty } = req.query;
+  const { page = 1, limit = 1000, difficulty, tech } = req.query;
   const skip = (page - 1) * limit;
 
+  const result = tech
+    ? await Projects.find({ techStack: new RegExp(tech, "i") }, "", {
+        skip,
+        limit,
+      })
+    : difficulty !== "Get All"
+    ? await Projects.find({ difficulty: difficulty }, "", { skip, limit })
+    : await Projects.find({}, "", { skip, limit });
 
-   const result =
-     difficulty !== "Get All"
-       ? await Projects.find({ difficulty: difficulty }, "", { skip, limit })
-       : await Projects.find({}, "", { skip, limit });
-
-  
+  console.log(result);
   
   res.status(200).json(result);
 };
