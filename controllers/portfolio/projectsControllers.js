@@ -5,11 +5,9 @@ const { Projects } = require("../../models/index");
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
-  const { page = 1, limit = 1000 } = req.query;
+  const { page = 1, limit = 1000, difficulty } = req.query;
   const skip = (page - 1) * limit;
-  const difficulty = req.query;
 
-console.log(difficulty);
 
    const result =
      difficulty !== "Get All"
@@ -17,7 +15,6 @@ console.log(difficulty);
        : await Projects.find({}, "", { skip, limit });
 
   
-console.log(result);
   
   res.status(200).json(result);
 };
