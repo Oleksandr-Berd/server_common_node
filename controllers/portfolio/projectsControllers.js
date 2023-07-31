@@ -5,9 +5,12 @@ const { Projects } = require("../../models/index");
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
-  const { page = 1, limit = 1000, difficulty, tech } = req.query;
+  const { page = 1, limit = 3, difficulty, tech } = req.query;
   const skip = (page - 1) * limit;
 
+const allProjects = await Projects.find({}, "");
+
+  
   const result = tech
     ? await Projects.find({ techStack: new RegExp(tech, "i") }, "", {
         skip,
@@ -17,11 +20,12 @@ const getAll = async (req, res) => {
     ? await Projects.find({ difficulty: difficulty }, "", { skip, limit })
     : await Projects.find({}, "", { skip, limit });
 
+  const totalPages = Math.ceil(allProjects.length / limit); 
   
-  res.status(200).json(result);
+
+  res.status(200).json({result, totalPages});
 };
 
-const getAllByDifficulty = async (req, res) => {};
 
 const getDetails = async (req, res) => {
   const { title } = req.params;
@@ -97,7 +101,6 @@ const removeOne = async (req, res) => {};
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  getAllByDifficulty: ctrlWrapper(getAllByDifficulty),
   getDetails: ctrlWrapper(getDetails),
   addNew: ctrlWrapper(addNew),
   updateOne: ctrlWrapper(updateOne),
