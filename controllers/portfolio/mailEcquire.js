@@ -6,20 +6,23 @@ const { SENDGRID_KEY } = process.env;
 sgMail.setApiKey(SENDGRID_KEY);
 
 const sendMail = async (req, res) => {
-  const { emailUser, nameUser, messageUser } = req.body;
+    const { contactName, contactEmail, message } = req.body;
+    
+    console.log(contactName, contactEmail, message);
+
   const email = {
     to: "alex.berd86@icloud.com",
     from: "alex.berd86@gmail.com",
     subject: "from portfolio",
-    html: `<p>Hello World! ${messageUser}</p> Best regards, ${nameUser}, my email ${emailUser}`,
+    html: `<p>Hello World! ${message}</p> Best regards, ${contactName}, my email ${contactEmail}`,
   };
 
   try {
-    const result = await sgMail.send(email);
+      const result = await sgMail.send(email);
     res.json({
       code: 200,
-        message: "Email sent successfully",
-      data: result,
+      message: "Email sent successfully",
+      email: email,
     });
   } catch (error) {
     console.error("Error sending email:", error);
