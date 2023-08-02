@@ -12,7 +12,7 @@ const { schemas } = require("../../models/portfolio/projects");
 
 const projectsRoutes = express.Router();
 
-projectsRoutes.get("/projects/:difficulty", ctrlProjects.getAll);
+projectsRoutes.get("/projects", ctrlProjects.getAll);
 
 projectsRoutes.get("/projects/:title", ctrlProjects.getDetails);
 
