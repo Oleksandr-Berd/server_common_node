@@ -20,20 +20,17 @@ projectsRoutes.get("/projects/:title", ctrlProjects.getDetails);
 projectsRoutes.post(
   "/projects",
   validateBody(schemas.projectPostSchema),
-  authenticateAdmin,
   ctrlProjects.addNew
 );
 
 projectsRoutes.patch(
   "/projects/cover",
-  authenticateAdmin,
   uploadCloud.single("coverImage"),
   ctrlProjects.updateCover
 );
 
 projectsRoutes.patch(
   "/projects/preview",
-  authenticateAdmin,
   uploadCloud.single("preview"),
   ctrlProjects.updatePreview
 );
