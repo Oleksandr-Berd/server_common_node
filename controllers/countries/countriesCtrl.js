@@ -15,5 +15,16 @@ const allCountries = await Countries.find({}, "");
   res.status(200).json({result, totalPages});
 };
 
+const countryDetails = async (req, res) => {
+const {id} = req.params
 
-module.exports = {getAll: ctrlWrapper(getAll)};
+    const result = await Countries.findById({ _id: id }, "")
+    
+    res.status(200).json({result})
+}
+
+
+module.exports = {
+  getAll: ctrlWrapper(getAll),
+  countryDetails: ctrlWrapper(countryDetails),
+};
