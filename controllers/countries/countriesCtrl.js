@@ -3,17 +3,26 @@ const { Countries } = require("../../models/index")
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
-  const { page = 1, limit = 8 } = req.query;
+  const { page = 1, limit = 8, searchQuery } = req.query;
   const skip = (page - 1) * limit;
 
-const allCountries = await Countries.find({}, "");
+  const allCountries = await Countries.find({}, "");
+
+  const result = searchQuery
+    ? await Countries.find({ name: new RegExp(searchQuery, "i") }, "", {
+        skip,
+        limit,
+      })
+    : await Countries.find({}, "", { skip, limit });
+
+  const totalPages = searchQuery
+    ? Math.ceil(result.length / limit)
+    : Math.ceil(allCountries.length / limit);
     
-  const totalPages = Math.ceil(allCountries.length / limit); 
-    
-    const result = await Countries.find({}, "", { skip, limit });
-    
-  res.status(200).json({result, totalPages});
+  res.status(200).json({ result, totalPages });
 };
+
+
 
 const countryDetails = async (req, res) => {
 const {id} = req.params
