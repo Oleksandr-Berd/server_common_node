@@ -19,8 +19,10 @@ const countryDetails = async (req, res) => {
 const {id} = req.params
 
     const result = await Countries.findById({ _id: id }, "")
-    
-    res.status(200).json({result})
+
+const neighbors = await Countries.find({alpha3Code: result.borders.map(el => el)})
+
+    res.status(200).json({ result, neighbors: neighbors.map(({name}) => name)});
 }
 
 
