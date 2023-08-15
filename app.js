@@ -9,7 +9,8 @@ const moviesRouter = require("./routes/entertainment/moviesRoutes")
 const authEntertainmentRouter = require("./routes/entertainment/authRoutes");
 const projectsRoutes = require("./routes/portfolio/projectsRoutes");
 const adminPortfolioRoutes = require("./routes/portfolio/adminRoutes");
-const mailRoutes = require("./routes/portfolio/mail")
+const mailRoutes = require("./routes/portfolio/mail");
+const countriesRoutes = require('./routes/countries/countriesRoutes');
 
 const app = express();
 
@@ -37,6 +38,8 @@ app.use("/api/entertainment/auth", authEntertainmentRouter);
 app.use("/api/portfolio/", projectsRoutes)
 app.use("/api/portfolio/", adminPortfolioRoutes);
 app.use("/api/portfolio/", mailRoutes);
+app.use("/api/countries/", countriesRoutes);
+
 
 
 
