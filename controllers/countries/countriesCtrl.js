@@ -47,9 +47,9 @@ const filterRegion = region === "all" ? null : region
 
 
 const countryDetails = async (req, res) => {
-const {id} = req.params
+const {name} = req.params
 
-    const result = await Countries.findById({ _id: id }, "")
+    const result = await Countries.findById({ name: name }, "");
 
 const neighbors = await Countries.find({alpha3Code: result.borders.map(el => el)})
 
