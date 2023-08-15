@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const { handleMongooseError } = require("../../utils");
 
-const difficulties = ["Junior", "Intermediate", "Advanced", "Guru"];
+const difficulties = ["junior", "intermediate", "advanced", "guru"];
 
 const schemaProject = Schema(
   {
