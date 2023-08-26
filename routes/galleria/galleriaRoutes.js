@@ -6,7 +6,7 @@ const { uploadCloud } = require("../../middleware/index");
 const galleriaRouter = express.Router()
 
 galleriaRouter.get("/all", ctrlGalleria.getAll)
-// galleriaRouter.get("/all/:id", ctrlGalleria.getDetails);
+galleriaRouter.get("/:id", ctrlGalleria.getOneById);
 galleriaRouter.patch(
   "/:id/image",
   uploadCloud.single("image"),
