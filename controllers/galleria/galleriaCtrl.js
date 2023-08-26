@@ -8,6 +8,17 @@ const getAll = async (req, res) => {
   res.status(200).json(result);
 };
 
+const getOneById = async (req, res) => {
+  const { id } = req.params;
+  const result = await GalleriaCollection.findById(id);
+
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+
+  res.status(200).json(result);
+};
+
 const addImage = async (req, res) => {
   const { id } = req.params;
 
@@ -32,4 +43,5 @@ const addImage = async (req, res) => {
 module.exports = {
   getAll: ctrlWrapper(getAll),
   addImage: ctrlWrapper(addImage),
+  getOneById: ctrlWrapper(getOneById),
 };
