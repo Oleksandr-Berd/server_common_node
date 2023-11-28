@@ -12,6 +12,7 @@ const adminPortfolioRoutes = require("./routes/portfolio/adminRoutes");
 const mailRoutes = require("./routes/portfolio/mail");
 const countriesRoutes = require('./routes/countries/countriesRoutes');
 const galleriaRouter = require("./routes/galleria/galleriaRoutes");
+const quizRouter = require("./routes/quiz/quizRoutes");
 
 const app = express();
 
@@ -33,7 +34,6 @@ const pathToEnv = path.join(__dirname, "..", "config", ".env");
 
 dotenv.config({ path: pathToEnv });
 
-
 app.use("/api/entertainment", moviesRouter);
 app.use("/api/entertainment/auth", authEntertainmentRouter);
 app.use("/api/portfolio/", projectsRoutes)
@@ -41,7 +41,7 @@ app.use("/api/portfolio/", adminPortfolioRoutes);
 app.use("/api/portfolio/", mailRoutes);
 app.use("/api/countries/", countriesRoutes);
 app.use("/api/galleria/", galleriaRouter);
-
+app.use("/api/quiz/", quizRouter)
 
 
 
