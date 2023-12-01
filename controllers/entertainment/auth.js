@@ -110,7 +110,6 @@ const updateUser = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-console.log(result);
   res.status(201).json({ name: newName, email: result.email, id: result.id });
 };
 
