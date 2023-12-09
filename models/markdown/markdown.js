@@ -7,6 +7,6 @@ const schemaMarkdown = Schema({
   
 });
 
-const MarkdownModel = model("markdown", schemaMarkdown);
+const MarkdownModel = model("markdowns", schemaMarkdown);
 
 module.exports = { MarkdownModel };

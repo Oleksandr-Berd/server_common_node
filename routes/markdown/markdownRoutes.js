@@ -8,5 +8,4 @@ const markdownRouter = express.Router();
 markdownRouter.get("/all", ctrlMarkdown.getAll);
 // markdownRouter.get("/:name", ctrlMarkdown.getOne);
 
-
 module.exports = markdownRouter;

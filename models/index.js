@@ -5,7 +5,7 @@ const { AdminPortfolio } = require("./portfolio/admin");
 const { Countries } = require('./countries/countries');
 const { GalleriaCollection } = require("./galleria/galleria");
 const { QuizCollection } = require("./quize/quize")
-const {MarkdownModel} = require("./markdown/markdown")
+const { MarkdownModel } = require("./markdown/markdown");
 
 module.exports = {
   Movies,
