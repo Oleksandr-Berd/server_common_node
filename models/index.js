@@ -4,7 +4,8 @@ const { Projects } = require("./portfolio/projects");
 const { AdminPortfolio } = require("./portfolio/admin");
 const { Countries } = require('./countries/countries');
 const { GalleriaCollection } = require("./galleria/galleria");
-const {QuizCollection} = require("./quize/quize")
+const { QuizCollection } = require("./quize/quize")
+const {MarkdownModel} = require("./markdown/markdown")
 
 module.exports = {
   Movies,
@@ -14,4 +15,5 @@ module.exports = {
   Countries,
   GalleriaCollection,
   QuizCollection,
+  MarkdownModel,
 };
