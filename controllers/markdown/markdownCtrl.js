@@ -18,7 +18,6 @@ const getOne = async (req, res) => {
 
 const addNew = async (req, res) => {
   const newDoc = await MarkdownModel.create({ ...req.body });
-console.log(newDoc);
   if (!newDoc) {
     throw HttpError(400, "Unable to save your data");
   }
