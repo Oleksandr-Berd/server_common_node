@@ -16,7 +16,22 @@ const getOne = async (req, res) => {
   res.status(200).json(result);
 };
 
+const addNew = async (req, res) => {
+  const newDoc = await MarkdownModel.create({ ...req.body });
+console.log(newDoc);
+  if (!newDoc) {
+    throw HttpError(400, "Unable to save your data");
+  }
+
+  res.status(201).json({
+    code: 201,
+    message: "Successful success",
+    data: { ...newDoc},
+  });
+};
+
 module.exports = {
   getAll: ctrlWrapper(getAll),
   getOne: ctrlWrapper(getOne),
+  addNew: ctrlWrapper(addNew),
 };
