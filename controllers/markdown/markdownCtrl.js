@@ -22,6 +22,8 @@ const addNew = async (req, res) => {
     throw HttpError(400, "Unable to save your data");
   }
 
+ 
+    
   res.status(201).json({
     code: 201,
     message: "Successful success",
@@ -29,8 +31,24 @@ const addNew = async (req, res) => {
   });
 };
 
+ const removeByName = async (req, res) => {
+   const { name } = req.params;
+
+   const result = await MarkdownModel.findOneAndRemove({name:name});
+
+   if (!result) {
+     throw HttpError(404, "Not found");
+   }
+   res.status(200).json(
+     {
+       message: "Delete is successful",
+     }
+   );
+ };
+
 module.exports = {
   getAll: ctrlWrapper(getAll),
   getOne: ctrlWrapper(getOne),
   addNew: ctrlWrapper(addNew),
+  removeByName: ctrlWrapper(removeByName),
 };
