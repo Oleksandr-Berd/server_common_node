@@ -17,6 +17,13 @@ const getOne = async (req, res) => {
 };
 
 const addNew = async (req, res) => {
+const {name} = req.body
+
+  const isMatch = await MarkdownModel.find({ name: name }, "");
+
+  if (isMatch.length) {
+    throw HttpError(409, `The document with name ${name} already exists`)
+  }
   const newDoc = await MarkdownModel.create({ ...req.body });
   if (!newDoc) {
     throw HttpError(400, "Unable to save your data");
