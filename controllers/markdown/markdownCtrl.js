@@ -4,7 +4,6 @@ const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
   const allDocs = await MarkdownModel.find({}, "");
-
   const welcomeDoc = allDocs.filter(({ name }) => name === "welcome.md");
 
   const result = await MarkdownModel.find({}, "");
