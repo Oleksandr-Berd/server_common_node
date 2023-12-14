@@ -3,15 +3,19 @@ const { MarkdownModel } = require("../../models/index.js");
 const { ctrlWrapper, HttpError } = require("./../../utils/index");
 
 const getAll = async (req, res) => {
+  const allDocs = await MarkdownModel.find({}, "");
+
+  const welcomeDoc = allDocs.filter(({ name }) => name === "welcome.md");
+
   const result = await MarkdownModel.find({}, "");
 
-  const welcomeDoc = result.find(({ name }) => name === "welcome.md");
+  const sortedResult = result.sort((a, b) => b.createdAt - a.createdAt);
 
-const sortedResult = result.sort((a, b) => b.createdAt - a.createdAt)
+  const uniquesResult = sortedResult.filter(
+    ({ name }) => name !== "welcome.md"
+  );
 
-  const uniquesResult = sortedResult.filter(({name}) => name !== "welcome.md");
-  
-  res.status(200).json([welcomeDoc, ...uniquesResult]);
+  res.status(200).json([welcomeDoc[0], ...uniquesResult]);
 };
 
 const getOne = async (req, res) => {
