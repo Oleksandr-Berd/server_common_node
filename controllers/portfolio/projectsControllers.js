@@ -25,7 +25,7 @@ const allProjects = await Projects.find({}, "");
   const sortedResult = result.sort((a, b) => b.createdAt - a.createdAt);
 
 
-  res.status(200).json({ sortedResult, totalPages });
+  res.status(200).json({ result, totalPages });
 };
 
 
