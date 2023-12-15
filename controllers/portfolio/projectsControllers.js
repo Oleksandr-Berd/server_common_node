@@ -21,9 +21,6 @@ const allProjects = await Projects.find({}, "");
     : await Projects.find({}, "", { skip, limit });
 
   const totalPages = Math.ceil(allProjects.length / limit); 
-  
-  const sortedResult = result.sort((a, b) => b.createdAt - a.createdAt);
-
 
   res.status(200).json({ result, totalPages });
 };
