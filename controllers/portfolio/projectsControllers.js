@@ -8,22 +8,38 @@ const getAll = async (req, res) => {
   const { page = 1, limit = 3, difficulty, tech } = req.query;
   const skip = (page - 1) * limit;
 
-const allProjects = await Projects.find({}, "");
+  try {
+    let query = {};
 
-  
-  const result = tech
-    ? await Projects.find({ techStack: new RegExp(tech, "i") }, "", {
-        skip,
-        limit,
-      })
-    : difficulty !== "Get All"
-    ? await Projects.find({ difficulty: difficulty }, "", { skip, limit })
-    : await Projects.find({}, "", { skip, limit });
+    // Add additional conditions based on query parameters if needed
+    if (tech) {
+      query.techStack = new RegExp(tech, "i");
+    }
 
-  const totalPages = Math.ceil(allProjects.length / limit); 
+    if (difficulty && difficulty !== "Get All") {
+      query.difficulty = difficulty;
+    }
 
-  res.status(200).json({ result, totalPages });
+    // Fetch documents, apply sorting by createdAt in descending order
+    const result = await Projects.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    // Count all projects without pagination for total pages calculation
+    const allProjectsCount = await Projects.countDocuments(query);
+
+    const totalPages = Math.ceil(allProjectsCount / limit);
+
+    res.status(200).json({ result, totalPages });
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
+
+module.exports = getAll;
+
 
 
 const getDetails = async (req, res) => {
