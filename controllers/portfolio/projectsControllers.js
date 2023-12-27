@@ -31,7 +31,7 @@ const getAll = async (req, res) => {
 
     const totalPages = Math.ceil(allProjectsCount / limit);
 
-    res.status(200).json({ result, totalPages });
+    res.status(200).json({ result, totalPages, allProjectsCount });
   } catch (error) {
     console.error(`Error: ${error.message}`);
     res.status(500).json({ error: "Internal Server Error" });
@@ -39,8 +39,6 @@ const getAll = async (req, res) => {
 };
 
 module.exports = getAll;
-
-
 
 const getDetails = async (req, res) => {
   const { title } = req.params;
